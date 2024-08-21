@@ -1,0 +1,160 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../../consts';
+import { Image } from 'astro:assets';
+import AvaLogo from '@src/assets/img/small-ava.jpg';
+import GithubWhite from '@src/assets/img/github-mark-white.svg';
+import GithubBlack from '@src/assets/img/github-mark.svg';
+
+
+const menu = [
+  {
+		link: '/about/',
+		label: 'About'
+	},
+	{
+		link: '/posts/',
+		label: 'All Posts'
+	},
+	{
+		link: '/projects/',
+		label: 'Projects'
+	},
+	{
+		link: '/tags/',
+		label: 'Tags'
+	},
+];
+---
+
+<header
+	id='site-header'
+	class:list={[
+		'flex items-center w-full transition duration-300 z-[999] border-[var(--soft-border-color)]'
+	]}
+>
+	<div class='container'>
+		<nav class='flex gap-4 items-center justify-between py-3'>
+			<h2 class='m-0'>
+				<a href='/' class='flex gap-4 items-center text-xl font-black uppercase'>
+					<!-- You can use your site logo, rounded ava or simply your site name here-->
+          <Image src={AvaLogo} alt='Your site name' class="rounded-full w-11 border-white border-2 shadow-lg"/> 
+					<!-- {SITE_TITLE} -->
+				</a>
+			</h2>
+			<div class='flex'>
+				<a class='p-3 dark:hidden' href='https://github.com/devaradise/devolio' target='_blank'
+					><Image src={GithubBlack} width={24} height={24} alt='Github logo' /></a
+				>
+				<a class='p-3 hidden dark:block' href='https://github.com/devaradise/devolio' target='_blank'
+					><Image src={GithubWhite} width={24} height={24} alt='Github logo' /></a
+				>
+				<button class='p-3' id='themeToggle' aria-label='Theme mode'>
+					<svg
+						class='sun'
+						xmlns='http://www.w3.org/2000/svg'
+						width='24'
+						height='24'
+						viewBox='0 0 24 24'
+						fill='none'
+						stroke='currentColor'
+						stroke-width='2'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+						class='lucide lucide-sun'
+						><circle cx='12' cy='12' r='4'></circle><path d='M12 2v2'></path><path d='M12 20v2'></path><path d='m4.93 4.93 1.41 1.41'
+						></path><path d='m17.66 17.66 1.41 1.41'></path><path d='M2 12h2'></path><path d='M20 12h2'></path><path
+							d='m6.34 17.66-1.41 1.41'></path><path d='m19.07 4.93-1.41 1.41'></path></svg
+					>
+					<svg
+						class='moon'
+						xmlns='http://www.w3.org/2000/svg'
+						width='24'
+						height='24'
+						viewBox='0 0 24 24'
+						fill='none'
+						stroke='currentColor'
+						stroke-width='2'
+						stroke-linecap='round'
+						stroke-linejoin='round'
+						class='lucide lucide-moon'
+					>
+						<path d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z'></path></svg
+					>
+				</button>
+			</div>
+		</nav>
+    <div class='fixed top-3 w-full sm:w-auto left-1/2 -translate-x-1/2 z-[999]'>
+      <div class="flex px-3 bg-white/90 dark:bg-zinc-900/75 backdrop-blur-md leading-tight rounded-full border dark:border-zinc-700">
+        {
+          menu.map((item) => (
+            <HeaderLink class='p-3 text-sm' href={item.link}>
+              {item.label}
+            </HeaderLink>
+          ))
+        }
+      </div>
+    </div>
+	</div>
+
+	<style is:global>
+		#themeToggle .moon {
+			display: none;
+		}
+		.dark #themeToggle .sun {
+			display: none;
+		}
+		.dark #themeToggle .moon {
+			display: block;
+		}
+	</style>
+
+	<script is:inline>
+		const theme = (() => {
+			if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				return 'dark';
+			}
+			if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+				return localStorage.getItem('theme');
+			}
+			return 'light';
+		})();
+
+		if (theme === 'light') {
+			document.documentElement.classList.remove('dark', 'pui-dark-mode');
+		} else {
+			document.documentElement.classList.add('dark', 'pui-dark-mode');
+		}
+
+		window.localStorage.setItem('theme', theme || '');
+
+		function sendMessage(message) {
+			const iframe = document.querySelector('iframe.giscus-frame');
+			if (!iframe) return;
+			iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+		}
+
+		const handleToggleClick = () => {
+			const element = document.documentElement;
+			element.classList.toggle('dark');
+			element.classList.toggle('pui-dark-mode');
+
+			const isDark = element.classList.contains('dark');
+			if (isDark) {
+				sendMessage({
+					setConfig: {
+						theme: 'dark_dimmed'
+					}
+				});
+			} else {
+				sendMessage({
+					setConfig: {
+						theme: 'light'
+					}
+				});
+			}
+			localStorage.setItem('theme', isDark ? 'dark' : 'light');
+		};
+		document.getElementById('themeToggle')?.addEventListener('click', handleToggleClick);
+	</script>
+</header>

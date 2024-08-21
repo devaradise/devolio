@@ -1,0 +1,12 @@
+---
+import { Image } from 'astro:assets';
+import FormattedDate from './FormattedDate.astro';
+import type { CollectionEntry } from 'astro:content';
+import Author from './Author.astro';
+
+type BlogPost = CollectionEntry<'blog'>;
+const { posts } = Astro.props;
+const site = Astro.site;
+const url = Astro.url;
+const isHome = site?.href === url.href;
+---

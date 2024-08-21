@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import Ava from '@src/assets/img/ava.jpg';
+
+type PicSize = 'sm' | 'md' | 'lg';
+interface Props {
+	picSize: PicSize;
+}
+const { picSize } = Astro.props;
+---
+
+<div class='flex gap-4 items-center leading-tight not-prose'>
+	<a
+		href='https://github.com/syakirurahman'
+		target='_blank'
+		rel='noopener noreferrer'
+		class:list={[
+			'rounded-full overflow-hidden shrink-0',
+			{ 'w-12 h-12': picSize === 'sm' },
+			{ 'w-[70px] h-[70px]': picSize === 'md' },
+			{ 'w-[90px] h-[90px]': picSize === 'lg' }
+		]}
+	>
+		<Image src={Ava} alt='Muhammad Syakirurohman' />
+	</a>
+	<div>
+		<div>
+			<a
+				href='https://github.com/syakirurahman'
+				class='block font-bold text-inherit hover:text-[var(--link-color)]'
+				target='_blank'
+				rel='noopener noreferrer'
+			>
+				Muhammad Syakirurohman
+			</a>
+		</div>
+		<small class='avatar__subtitle'>Frontend Engineer</small>
+	</div>
+</div>

@@ -1,0 +1,74 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@src/layouts/BaseLayout.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from 'src/consts';
+import { slugify } from '@src/utils';
+import Prose from '../../components/Prose.astro';
+import RecommendedPosts from '../../components/widgets/RecommendedPosts.astro';
+
+type BlogPost = CollectionEntry<'blog'>;
+interface Tag {
+	value: string;
+	label: string;
+	postCount: number;
+}
+const allPosts: BlogPost[] = await getCollection('blog');
+const mappedTags: { [key: string]: Tag } = {};
+for (const post of allPosts) {
+	for (const tag of post.data?.tags || []) {
+		const tagValue = slugify(tag);
+		if (mappedTags[tagValue]) {
+			mappedTags[tagValue].postCount += 1;
+		} else {
+			const _tag: Tag = {
+				value: tagValue,
+				label: tag,
+				postCount: 1
+			};
+			mappedTags[tagValue] = _tag;
+		}
+	}
+}
+const allTags = Object.values(mappedTags).sort((a, b) => {
+	if (a.label < b.label) {
+		return -1;
+	}
+	if (a.label > b.label) {
+		return 1;
+	}
+	return 0;
+});
+const title = `All Tags`;
+---
+
+<BaseLayout title={title + ' - ' + SITE_TITLE} description={SITE_DESCRIPTION + ' - ' + title}>
+	<div class='container lg:grid lg:grid-cols-12 space-y-8 lg:space-y-0 lg:gap-8 px-3'>
+		<main class='lg:col-span-8'>
+			<div class='flex justify-between items-end border-b border-[var(--soft-border-color)] pb-4 mb-4'>
+				<h1 class='font-bold text-3xl sm:text-4xl'>{title}</h1>
+			</div>
+			<div>
+				<Prose>
+					<ul>
+						{
+							allTags.map((tag) => (
+								<li>
+									<a
+										class='border no-underline inline-block py-1 px-3 text-inherit rounded-lg border-[var(--soft-border-color)] bg-[var(--background-surface-color)]'
+										href={`/tags/${tag.value}`}>
+										{tag.label}{' '}
+										<span class='inline-block ml-2 leading-5 w-5 h-5 text-center text-xs rounded-full font-bold bg-[var(--color-primary)] text-white'>
+											{tag.postCount}
+										</span>
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				</Prose>
+			</div>
+		</main>
+		<aside class='col-span-4'><RecommendedPosts /></aside>
+	</div>
+</BaseLayout>
