@@ -38,7 +38,7 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
         </div>
         <div>
           {
-            posts.map((post: BlogPost, i: number) => (
+            posts.map((post: BlogPost) => (
               <PostItem post={post} />
             ))
           }      

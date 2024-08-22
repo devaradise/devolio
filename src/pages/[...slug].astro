@@ -103,7 +103,7 @@ const { Content, headings } = await post.render();
 	const anchors = document.querySelectorAll('.prose h2[id], .prose h3[id]');
 	const links = document.querySelectorAll('nav.toc ul li a');
 
-	function observeToc(event) {
+	function observeToc() {
 		if (typeof anchors != 'undefined' && anchors != null && typeof links != 'undefined' && links != null) {
 			let scrollTop = window.scrollY;
 

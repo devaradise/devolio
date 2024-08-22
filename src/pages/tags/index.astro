@@ -2,9 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import BaseLayout from '@src/layouts/BaseLayout.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from 'src/consts';
 import { slugify } from '@src/utils';
-import Prose from '../../components/Prose.astro';
 
 type BlogPost = CollectionEntry<'blog'>;
 interface Tag {
