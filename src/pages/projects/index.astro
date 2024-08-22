@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Ava from '@src/assets/img/ava.jpg';
+import ProjectList from '../../components/ProjectList.astro';
+import { projects } from './projects';
+
+---
+
+<BaseLayout
+	title="All My Projects"
+	description="All my project portfolio from real projects to open source projects."
+>
+  <div class='container'>
+		<div>
+      <div class="mb-10">
+        <h1 class="text-3xl font-bold mb-2">All My Projects</h1>
+        <p class="text-zinc-700 text-lg">All my project portfolio from real projects to open source projects.</p>
+      </div>
+      <ProjectList projects={projects}/>
+    </div>
+  </div>
+</BaseLayout>

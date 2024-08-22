@@ -7,9 +7,13 @@ import FormattedDate from '@src/components/FormattedDate.astro';
 import type { CollectionEntry } from 'astro:content';
 import Ava from '@src/assets/img/ava.jpg';
 import { slugify } from '../utils';
+import Prose from '../components/Prose.astro';
+import { projects } from './projects/projects';
+import ProjectList from '../components/ProjectList.astro'
 
 type BlogPost = CollectionEntry<'blog'>;
 
+const top6Projects = projects.slice(0, 6);
 const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 5);
 ---
 
@@ -18,16 +22,21 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 		<div class='w-full flex items-center gap-16 mb-10'>
       <div class="text-pretty leading-9">
         <h1 class="text-4xl font-bold mb-4">Hi There, Syakir Here! </h1>
-        <div class="text-lg prose">
-          <p>I am a Front-end Engineer from Indonesia. I love sharing what i know on <a href="https://devaradise.com" target="_blank">devaradise.com</a>, and sometime i also share freebies like this. I also active on <a href="https://dev.to/syakirurahman" target="_blank">dev.to</a> and <a href="https://x.com/syakirurahman" target="_blank">twitter</a>.</p>
-          <p>I made Devolio to help you easily set up your own blog and portfolio website. It's a static site built with Astro and Tailwind CSS, and you can deploy it on platforms like Netlify, Vercel, or Cloudflare Pages.</p>  
-        </div>
+        <Prose>
+          <div class="text-lg">
+            <p>I am a Front-end Engineer from Indonesia. I love sharing what i know on <a href="https://devaradise.com" target="_blank">devaradise.com</a>, and sometime i also share freebies like this. I also active on <a href="https://dev.to/syakirurahman" target="_blank">dev.to</a> and <a href="https://x.com/syakirurahman" target="_blank">twitter</a>.</p>
+            <p>I made Devolio to help you easily set up your own blog and portfolio website. It's a static site built with Astro and Tailwind CSS, and you can deploy it on platforms like Netlify, Vercel, or Cloudflare Pages.</p>  
+          </div>
+        </Prose>
       </div>
       <Image src={Ava} alt="Muhammad Syakirurohman" width={300}  class="rounded-3xl rotate-3"/>
 		</div>
-		<main class='my-6'>
-      <div>
-        <h2 class="text-lg font-bold mb-3">Recent Posts</h2>
+		<main>
+      <div class='mt-6 mb-12'>
+        <div class="flex justify-between gap-2 border-b mb-1">
+          <h2 class="text-lg font-bold mb-3">Recent Posts</h2>
+          <a href="/posts/" class="inline-block py-2 underline text-zinc-950">All posts &raquo;</a>
+        </div>
         <div>
           {
             posts.map((post: BlogPost, i: number) => (
@@ -58,7 +67,15 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
             ))
           }      
         </div>
-        <a href="/posts/">All posts</a>
+        <div class="text-right">
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-between gap-2 mb-1">
+          <h2 class="text-lg font-bold mb-3">My Projects</h2>
+          <a href="/projects/" class="inline-block py-2 underline text-zinc-950">All projects &raquo;</a>
+        </div>
+        <ProjectList projects={top6Projects}/>
       </div>
 		</main>
 	</div>

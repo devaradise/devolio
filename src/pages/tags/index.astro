@@ -5,7 +5,6 @@ import BaseLayout from '@src/layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/consts';
 import { slugify } from '@src/utils';
 import Prose from '../../components/Prose.astro';
-import RecommendedPosts from '../../components/widgets/RecommendedPosts.astro';
 
 type BlogPost = CollectionEntry<'blog'>;
 interface Tag {
@@ -69,6 +68,5 @@ const title = `All Tags`;
 				</Prose>
 			</div>
 		</main>
-		<aside class='col-span-4'><RecommendedPosts /></aside>
 	</div>
 </BaseLayout>
