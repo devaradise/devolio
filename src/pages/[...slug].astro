@@ -27,7 +27,7 @@ const { Content, headings } = await post.render();
 ---
 
 <BaseLayout title={seoTitle || title} description={description} image={coverImage?.src || undefined}>
-	<div class='container md:flex gap-10'>
+	<div class='container lg:flex gap-10'>
 		<main
 			class='overflow-hidden grow'
 		>
@@ -35,16 +35,16 @@ const { Content, headings } = await post.render();
 				<Prose>
 					<div>
 						<h1 class='!my-1 leading-tight'>{title}</h1>
-            <div class='text-sm font-[500] mt-2 sm:mt-0 py-1 md:text-right sm:flex sm:justify-between sm:items-center'>
+            <div class='text-sm font-[500] mt-2 sm:mt-0 py-1 md:text-right flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center'>
               {
                 <div class='flex gap-2'>
                   {
                     (tags || [] )?.map((tag: string) => (
                       <a
-                        class='border border-zinc-300 rounded-2xl
-                        text-sm text-zinc-700 no-underline px-2 py-0.5
-                        transition-all duration-700
-                        hover:border-zinc-700'
+                        class='border border-zinc-300 dark:border-zinc-700 rounded-2xl
+                          text-sm text-zinc-700 dark:text-zinc-300 no-underline px-2 py-0.5
+                          transition-all duration-700
+                        hover:border-zinc-700 dark:hover:border-zinc-300'
                         href={`/tags/${slugify(tag)}`}>
                         {tag}
                       </a>
@@ -55,7 +55,7 @@ const { Content, headings } = await post.render();
               <div>
                 {
                   updatedDate ?
-                    <>Updated on <strong><FormattedDate date={pubDate} /></strong></>
+                    <>Updated on <strong><FormattedDate date={updatedDate} /></strong></>
                   :
                     <>Published on <strong><FormattedDate date={pubDate} /></strong></>
                 }

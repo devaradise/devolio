@@ -21,13 +21,13 @@ function buildToc(headings: any) {
 ---
 
 <nav class='toc sticky top-4 py-2 lg:-ml-3'>
-	<h3 class='font-extrabold uppercase mb-1 px-3 text-sm text-zinc-600'>On This Page</h3>
-	<ul class='toc-list max-h-[calc(100vh-130px)] overflow-auto text-[.825rem] text-[var(--color-content-secondary)]'>
+	<h3 class='font-extrabold uppercase mb-1 px-3 text-sm'>On This Page</h3>
+	<ul class='toc-list max-h-[calc(100vh-70px)] overflow-auto text-[.825rem] text-[var(--color-content-secondary)]'>
 		{
 			toc.map((heading: any) => (
 				<li>
 					<a
-						class='block font-bold py-1.5 px-3 border-l border-transparent text-inherit leading-tight'
+						class='block font-bold py-1.5 px-3 border-l border-transparent text-inherit leading-tight text-zinc-700 dark:text-zinc-300'
 						href={'#' + heading.slug}>
 						{heading.text}
 					</a>
@@ -36,7 +36,7 @@ function buildToc(headings: any) {
 							{heading.subheadings.map((subheading: any) => (
 								<li>
 									<a
-										class='block py-1.5 pl-6 pr-3 border-l border-transparent text-inherit leading-tight'
+										class='block py-1.5 pl-6 pr-3 border-l border-transparent text-inherit leading-tight text-zinc-700 dark:text-zinc-300'
 										href={'#' + subheading.slug}>
 										{subheading.text}
 									</a>
@@ -61,7 +61,11 @@ function buildToc(headings: any) {
 
 	/* Handle */
 	.toc-list::-webkit-scrollbar-thumb {
-		background: #c1c3c7;
+		background: #eeeeee;
+		border-radius: 5px;
+	}
+  :global(.dark) .toc-list::-webkit-scrollbar-thumb {
+		background: #2e2e2e;
 		border-radius: 5px;
 	}
 </style>

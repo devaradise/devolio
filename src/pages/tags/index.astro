@@ -12,6 +12,25 @@ interface Tag {
 	label: string;
 	postCount: number;
 }
+
+function groupTagsByFirstLetter(tags: Tag[]) {
+  const grouped = tags.reduce((acc, tag) => {
+    const firstLetter = tag.label[0].toUpperCase();
+    if (!acc[firstLetter]) {
+      acc[firstLetter] = [];
+    }
+    acc[firstLetter].push(tag);
+    return acc;
+  }, {} as Record<string, Tag[]>);
+
+  return Object.entries(grouped)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([letter, tags]) => ({
+      letter,
+      tags: tags.sort((a, b) => a.label.localeCompare(b.label)),
+    }));
+}
+
 const allPosts: BlogPost[] = await getCollection('blog');
 const mappedTags: { [key: string]: Tag } = {};
 for (const post of allPosts) {
@@ -29,44 +48,37 @@ for (const post of allPosts) {
 		}
 	}
 }
-const allTags = Object.values(mappedTags).sort((a, b) => {
-	if (a.label < b.label) {
-		return -1;
-	}
-	if (a.label > b.label) {
-		return 1;
-	}
-	return 0;
-});
+const groupedTags  = groupTagsByFirstLetter(Object.values(mappedTags))
 const title = `All Tags`;
+const description = 'Post tags: concise keywords categorizing content for easy navigation and improved searchability'
 ---
 
-<BaseLayout title={title + ' - ' + SITE_TITLE} description={SITE_DESCRIPTION + ' - ' + title}>
-	<div class='container lg:grid lg:grid-cols-12 space-y-8 lg:space-y-0 lg:gap-8 px-3'>
-		<main class='lg:col-span-8'>
-			<div class='flex justify-between items-end border-b border-[var(--soft-border-color)] pb-4 mb-4'>
-				<h1 class='font-bold text-3xl sm:text-4xl'>{title}</h1>
-			</div>
-			<div>
-				<Prose>
-					<ul>
-						{
-							allTags.map((tag) => (
-								<li>
-									<a
-										class='border no-underline inline-block py-1 px-3 text-inherit rounded-lg border-[var(--soft-border-color)] bg-[var(--background-surface-color)]'
-										href={`/tags/${tag.value}`}>
-										{tag.label}{' '}
-										<span class='inline-block ml-2 leading-5 w-5 h-5 text-center text-xs rounded-full font-bold bg-[var(--color-primary)] text-white'>
-											{tag.postCount}
-										</span>
-									</a>
-								</li>
-							))
-						}
-					</ul>
-				</Prose>
-			</div>
-		</main>
+<BaseLayout title={title} description={description}>
+	<div class='container'>
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold mb-2">{title}</h1>
+      <p class="text-zinc-700 dark:text-zinc-300 text-lg">{description}</p>
+    </div>
+    <div>
+      {groupedTags.map(({ letter, tags }) => (
+        <div class="flex gap-2 border-b dark:border-b-zinc-700 py-3 mb-5 capitalize">
+          <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-200 w-7 shrink-0">{letter}</h2>
+          <div class='flex gap-2 flex-wrap'>
+            {
+              (tags || [] )?.map((tag: Tag) => (
+                <a
+                  class='border border-zinc-300 dark:border-zinc-700 rounded-2xl
+                    text-sm text-zinc-700 dark:text-zinc-300 no-underline px-3 py-1
+                    transition-all duration-700
+                  hover:border-zinc-700 dark:hover:border-zinc-300'
+                  href={`/tags/${slugify(tag.value)}/`}>
+                  {tag.label} ({tag.postCount})
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      ))}
+    </div>
 	</div>
 </BaseLayout>

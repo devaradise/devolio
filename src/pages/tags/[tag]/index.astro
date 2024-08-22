@@ -3,8 +3,9 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import BaseLayout from '@src/layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/consts';
-import PostList from '@src/components/PostList.astro';
+import PostList from '@src/components/PostsByYear.astro';
 import { slugify, unslugify } from '@src/utils';
+import PostsByYear from '@src/components/PostsByYear.astro';
 
 type BlogPost = CollectionEntry<'blog'>;
 export const getStaticPaths = async () => {
@@ -22,40 +23,18 @@ export const getStaticPaths = async () => {
 const { tag } = Astro.params;
 const allPosts: BlogPost[] = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const taggedPosts = allPosts.filter((post) => post.data.tags?.map((tag) => slugify(tag)).includes(tag || ''));
-const slicedTaggedPosts = taggedPosts.slice(0, 10);
-const title = `${unslugify(tag || '')}`;
+const title = `All Posts Tagged with ${unslugify(tag || '')}`;
+const description = `All Posts Tagged with ${unslugify(tag || '')}`;
 ---
 
-<BaseLayout title={`${title} - ${SITE_TITLE}`} description={SITE_DESCRIPTION + ' - ' + title}>
-	<div class='container lg:grid lg:grid-cols-12 space-y-8 lg:space-y-0 lg:gap-8'>
-		<main class='lg:col-span-8'>
-			<div class='sm:flex sm:justify-between sm:items-end border-b border-[var(--soft-border-color)] pb-4 mb-4'>
-				<h1 class='font-bold text-2xl mb-2 sm:mb-0 sm:text-3xl'>{title}</h1>
-				<a
-					class='flex gap-2 items-center w-fit font-semibold text-inherit hover:text-[var(--color-primary)] bg-[var(--background-surface-color)] py-2 px-4 rounded-3xl border border-[var(--soft-border-color)]'
-					href={`/tags/`}
-				>
-					View all tags
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						width='24'
-						height='24'
-						viewBox='0 0 24 24'
-						fill='none'
-						stroke='currentColor'
-						stroke-width='2'
-						stroke-linecap='round'
-						stroke-linejoin='round'
-						class='lucide lucide-chevrons-right'
-					>
-						<>
-							<path d='m6 17 5-5-5-5'></path>
-							<path d='m13 17 5-5-5-5'></path>
-						</>
-					</svg>
-				</a>
-			</div>
-			<PostList posts={slicedTaggedPosts} />
-		</main>
-	</div>
+<BaseLayout
+	title={title}
+	description={description}
+>
+  <div class='container'>
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold mb-2">{title}</h1>
+    </div>
+    <PostsByYear posts={taggedPosts}/>
+  </div>
 </BaseLayout>
