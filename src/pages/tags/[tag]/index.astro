@@ -2,8 +2,6 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import BaseLayout from '@src/layouts/BaseLayout.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from 'src/consts';
-import PostList from '@src/components/PostsByYear.astro';
 import { slugify, unslugify } from '@src/utils';
 import PostsByYear from '@src/components/PostsByYear.astro';
 
