@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import type { Project } from '../pages/projects/projects'
 import { kFormatter } from '../utils'
 import GithubWhite from '@src/assets/img/github-mark-white.svg';
@@ -38,8 +39,8 @@ const { projects } = Astro.props
                   hover:border-zinc-700 dark:hover:border-zinc-300
                     flex items-center gap-1
               '>
-                <img src={GithubBlack.src} class='h-3 dark:hidden' alt='Github stars' />
-                <img src={GithubWhite.src} class='h-3 hidden dark:block' alt='Github stars' />
+                <Image src={GithubBlack} height={12} class='dark:hidden' alt='Github stars' />
+                <Image src={GithubWhite} height={12} class='hidden dark:block' alt='Github stars' />
                 {kFormatter(project.stargazers_count)} stars
               </a>
             </div>
