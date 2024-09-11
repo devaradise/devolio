@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import Ava from '@src/assets/img/ava.jpg';
+import kojiImg from '@src/assets/img/koji.png';
 
 type PicSize = 'sm' | 'md' | 'lg';
 interface Props {
@@ -21,7 +21,7 @@ const { picSize } = Astro.props;
 			{ 'w-[90px] h-[90px]': picSize === 'lg' }
 		]}
 	>
-		<Image src={Ava} alt='Muhammad Syakirurohman' />
+		<Image src={kojiImg} alt='koji' />
 	</a>
 	<div>
 		<div>
