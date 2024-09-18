@@ -12,17 +12,17 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    name: 'Devaradise.com',
-    description: 'A blog that sharing web development resources and tutorials',
-    demoLink: 'https://devaradise.com',
-    tags: ['Blog']
+    name: 'Product - Landing Page',
+    description: 'Work at the speed of thought Tools, tutorials, design and innovation experts.',
+    demoLink: 'https://product-alpha-taupe.vercel.app/',
+    tags: ['Product']
   },
   {
-    name: 'Sellercraft App',
-    description: 'An Ecommerce omnichannel platform in Southeast Asia',
-    demoLink: 'https://sellercraft.co',
-    demoLinkRel: 'nofollow noopener noreferrer',
-    tags: ['ECommerce', 'Saas']
+    name: 'Workly - Platform Business',
+    description: 'One platform to boost your business, Learn how to manage your business effieciently.',
+    demoLink: 'https://workly.vercel.app/',
+    demoLinkRel: 'https://workly.vercel.app/',
+    tags: ['Business', 'Saas']
   },
   {
     name: 'Gaji.id App',
@@ -32,34 +32,51 @@ export const projects: Project[] = [
     tags: ['HRIS', 'Saas']
   },
   {
-    ...(await getRepositoryDetails('devaradise/paradise-ui')),
-    name: 'Paradise UI',
+    name: 'Viena - Cryptocurrency',
+    description: 'The World Fastest Growing Crypto Web App. Buy and sell 200+ cryptocurrencies',
     demoLink: 'https://paradise-ui.com',
-    postLink: 'https://devaradise.com/how-i-build-paradise-ui-react-component-library/',
-    tags: ['React', 'UI Library']
+    tags: ['Tailwind', 'UI Library']
   },
   {
-    ...(await getRepositoryDetails('syakirurahman/react-lab')),
-    name: 'React Lab',
-    demoLink: 'https://devaradise.com/lab/react/',
-    tags: ['React']
+    name: 'PLAN PINTAR',
+    description: 'Deepen your design and coding skills with experts in their fields and get official.',
+    demoLink: 'https://planpintar.netlify.app/',
+    tags: ['Vue.js', 'UI Library']
   },
   {
-    ...(await getRepositoryDetails('syakirurahman/pokemon-catcher')),
-    name: 'Pokemon Catcher',
-    demoLink: 'https://pokemon-catcher-18636.web.app/',
-    tags: ['Hobby']
+    name: 'BEAT NFT',
+    description: 'Discover, collect, and sell extraordinary NFT. Explore on the world best & largest NFT.',
+    demoLink: 'https://beatnft.netlify.app/',
+    tags: ['Tailwind', 'UI Library']
   },
   {
-    ...(await getRepositoryDetails('syakirurahman/movie-nominations')),
-    name: 'Movie Nominations',
-    demoLink: 'https://movie-nominations-c21c3.web.app/',
-    tags: ['Hobby']
+    name: 'BEAT NFT',
+    description: 'Discover, collect, and sell extraordinary NFT. Explore on the world best & largest NFT.',
+    demoLink: 'https://beatnft.netlify.app/',
+    tags: ['Tailwind', 'UI Library']
   },
   {
-    ...(await getRepositoryDetails('syakirurahman/organization-tree')),
-    name: 'Organization tree',
-    demoLink: 'https://organization-tree-2a446.web.app/',
-    tags: ['Hobby']
+    name: 'CIKARANG PROPERTY',
+    description: 'Contact us. Get Your Dream Property Through Our Trusted Services.',
+    demoLink: 'https://cikpro.netlify.app/',
+    tags: ['Bootstrap', 'UI Library']
+  },
+  {
+    name: 'FAST UPB',
+    description: 'Festival Ajang Sinergisitas Teknologi',
+    demoLink: 'https://fastupb.com/',
+    tags: ['Laravel', 'FAST UPB']
+  },
+  {
+    name: 'DOCTALK - MEDICAL APP',
+    description: 'Health and disease consulting platform.',
+    demoLink: 'https://doctalk-tan.vercel.app/',
+    tags: ['Doctalk', 'Health']
+  },
+  {
+    name: 'PRO MENTOR - APP',
+    description: 'Consultation platform with mentors.',
+    demoLink: 'https://promentor.vercel.app/',
+    tags: ['Vue.js', 'Consulting']
   }
 ]
