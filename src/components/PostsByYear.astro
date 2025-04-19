@@ -32,7 +32,7 @@ const groupedPosts = groupPostsByYear(posts);
   <div class="mb-8">
     <h2 class="text-2xl font-bold mb-4">{year}</h2>
     <div>
-      {posts.map((post: BlogPost, i: number) => (
+      {posts.map((post: BlogPost) => (
         <PostItem post={post} />
       ))}
     </div>

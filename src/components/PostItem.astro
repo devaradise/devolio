@@ -11,7 +11,7 @@ const { post }: Record<string, any> | { post: BlogPost } = Astro.props
     <FormattedDate date={post.data.pubDate} />
   </div>
   <h3 class='font-medium grow'>
-    <a href={`/${post.slug}/`}>
+    <a href={`/${post.id}/`}>
       {post.data.title}
     </a>
   </h3>

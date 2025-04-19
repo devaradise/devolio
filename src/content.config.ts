@@ -1,9 +1,9 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders'; // Not available with legacy API
 
 const blog = defineCollection({
-	type: 'content',
-	// Type-check frontmatter using a schema
-	schema: ({ image }) => z.object({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
+  schema: ({ image }) => z.object({
 		title: z.string(),
     seoTitle: z.string().optional(),
 		description: z.string(),
@@ -11,12 +11,8 @@ const blog = defineCollection({
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).optional(),
-		coverImage: image()
-      .refine((img) => img.width >= 960, {
-        message: 'Cover image must be at least 960 pixels wide!'
-      })
-      .optional()
-	}),
+		coverImage: image().optional()
+	})
 });
 
 export const collections = { blog };

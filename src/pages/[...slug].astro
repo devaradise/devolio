@@ -8,13 +8,14 @@ import AboutTheAuthor from '../components/widgets/AboutTheAuthor.astro';
 import TableOfContent from '../components/widgets/TableOfContent.astro';
 import { slugify } from '../utils';
 import { loadEnv } from 'vite';
+import { render } from 'astro:content';
 
 const { GISCUS_REPO, GISCUS_REPO_ID, GISCUS_CATEGORY, GISCUS_CATEGORY_ID } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), '');
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
 	return posts.map((post: any) => ({
-		params: { slug: post.slug },
+		params: { slug: post.id },
 		props: post
 	}));
 }
@@ -23,7 +24,7 @@ const post = Astro.props;
 const {
 	data: { title, seoTitle, description, coverImage, pubDate, updatedDate, tags }
 } = post;
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 ---
 
 <BaseLayout title={seoTitle || title} description={description} image={coverImage?.src || undefined}>

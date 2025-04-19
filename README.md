@@ -2,7 +2,7 @@
 
 Devolio is a free portfolio and blog template to help you setup your personal website quickly.
 
-[Demo](https://devolio.devaradise.com) [Article](https://devaradise.com/devolio-astro-portfolio-blog-theme)
+[Demo](https://devolio.devaradise.com) [Article](https://devaradise.com/devolio-astro-portfolio-blog-theme/)
 
 ---
 
